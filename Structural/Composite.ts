@@ -36,8 +36,8 @@ export interface Phones {
     }
   }
 
-const phone1 = new Phone(200,"Samsung S7");
-const phone2 = new Phone(350, "Iphone 11");
+const phone1 = new Phone(500,"Samsung S7");
+const phone2 = new Phone(650, "Iphone 11");
 const box1 = new Box();
 const box2 = new Box();
 box2.addPhone(box1);
@@ -47,7 +47,7 @@ console.log(`phone2 price: ${phone2.getPrice()},00$, name: ${phone2.getName()}`)
 
 box1.addPhone(phone1);
 box1.addPhone(phone2);
-box2.addPhone(new Phone(500,"Samsung S20"));
+box2.addPhone(new Phone(900,"Samsung S20"));
 
 console.log(`box1 price: ${box1.getPrice()},00$, names: ${box1.getName()}`);
 console.log(`box2 price: ${box2.getPrice()},00$, names: ${box2.getName()}`);

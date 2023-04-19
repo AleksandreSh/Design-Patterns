@@ -14,15 +14,15 @@ var PowerEU = /** @class */ (function () {
     };
     return PowerEU;
 }());
-var PowerUSAToPowerEU = /** @class */ (function () {
-    function PowerUSAToPowerEU(charger) {
+var AdapterUSAtoEU = /** @class */ (function () {
+    function AdapterUSAtoEU(charger) {
         this.charger = charger;
     }
-    PowerUSAToPowerEU.prototype.chargingEU = function () {
+    AdapterUSAtoEU.prototype.chargingEU = function () {
         console.log("addapting USA charger to EU, ".concat(this.charger.chargingUSA()));
     };
-    return PowerUSAToPowerEU;
+    return AdapterUSAtoEU;
 }());
 var chargingLaptop = new PowerUSA();
-var chargingAdapter = new PowerUSAToPowerEU(chargingLaptop);
+var chargingAdapter = new AdapterUSAtoEU(chargingLaptop);
 chargingAdapter.chargingEU();

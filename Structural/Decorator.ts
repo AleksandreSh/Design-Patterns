@@ -1,49 +1,53 @@
 
-interface Car {
-    upgrade(): string;
+abstract class Button {
+    public text: string
+    public styles: string[] = []
+
+    public abstract handle(): string
 }
 
-class Audi implements Car {
-    public upgrade(): string {
-        return 'Audi';
+class SubmitButton extends Button {
+    constructor(text: string) {
+        super();
+        this.text = text
+    }
+
+    handle() {
+        return `You click on button ${this.text} `
     }
 }
 
-class Decorator implements Car {
-    protected car: Car;
-
-    constructor(car: Car) {
-        this.car = car;
-    }
-
-    public upgrade(): string {
-        return this.car.upgrade();
-    }
+abstract class StylesButton extends Button {
+    decoratedButton: Button
+    public abstract handle(): string
 }
 
-class DecoratorA extends Decorator {
+class ColorBackgroundDecorator extends StylesButton {
+    constructor(public decoratedButton: Button) {
+        super()
 
-    public upgrade(): string {
-        return `Tuning car (${super.upgrade()})`;
+        decoratedButton.styles.push('background: orange;')
+    }
+
+    handle(): string {
+        return this.decoratedButton.handle() + 'with color background'
     }
 }
 
-class DecoratorB extends Decorator {
-    public upgrade(): string {
-        return `Upgrade car (${super.upgrade()})`;
+class BorderDecorator extends StylesButton {
+    constructor(public decoratedButton: Button) {
+        super()
+
+        decoratedButton.styles.push('border: 1px solid white;')
+    }
+
+    handle(): string {
+        return this.decoratedButton.handle() + ', border'
     }
 }
 
-function clientCode(car: Car) {
-    console.log(`RESULT: ${car.upgrade()}`);
-}
+let btn1 = new SubmitButton('Send')
+btn1 = new ColorBackgroundDecorator(btn1)
+btn1 = new BorderDecorator(btn1)
 
-const audi = new Audi();
-console.log('Client: I\'ve got a car:');
-clientCode(audi);
-console.log('');
-
-const audiDecorator1 = new DecoratorA(audi);
-const audiDecorator2 = new DecoratorB(audiDecorator1);
-console.log('Client: Now I\'ve got a upgrade car:');
-clientCode(audiDecorator2);
+console.log(btn1.handle())

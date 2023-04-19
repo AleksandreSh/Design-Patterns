@@ -1,57 +1,30 @@
-var Phone = /** @class */ (function () {
-    function Phone(sharedState) {
-        this.sharedState = sharedState;
+var Tea = /** @class */ (function () {
+    function Tea(type) {
+        this.type = type;
     }
-    Phone.prototype.operation = function (uniqueState) {
-        console.log("unique (".concat(JSON.stringify(uniqueState), ") state."));
-    };
-    return Phone;
+    return Tea;
 }());
-var PhoneFactory = /** @class */ (function () {
-    function PhoneFactory(initialPhones) {
-        this.phones = {};
-        for (var _i = 0, initialPhones_1 = initialPhones; _i < initialPhones_1.length; _i++) {
-            var state = initialPhones_1[_i];
-            this.phones[this.getKey(state)] = new Phone(state);
-        }
+var TeaFactory = /** @class */ (function () {
+    function TeaFactory() {
+        this.types = [];
     }
-    PhoneFactory.prototype.getKey = function (state) {
-        return state.join('_');
-    };
-    PhoneFactory.prototype.getPhone = function (sharedState) {
-        var key = this.getKey(sharedState);
-        if (!(key in this.phones)) {
-            console.log('PhonesFactory: Can\'t find a phone, creating new one.');
-            this.phones[key] = new Phone(sharedState);
+    TeaFactory.prototype.create = function (name) {
+        var type = this.types[name];
+        if (type) {
+            return type;
         }
-        else {
-            console.log('PhoneFactory: Reusing existing phone.');
-        }
-        return this.phones[key];
+        // console.count('type')
+        this.types[name] = new Tea(name);
+        return this.types[name];
     };
-    PhoneFactory.prototype.listPhones = function () {
-        var count = Object.keys(this.phones).length;
-        console.log("\nPhoneFactory: I have ".concat(count, " models of phones:"));
-        for (var key in this.phones) {
-            console.log(key);
-        }
+    TeaFactory.prototype.getTypes = function () {
+        console.log(this.types);
     };
-    return PhoneFactory;
+    return TeaFactory;
 }());
-var factory = new PhoneFactory([
-    ['Iphone', '7', 'pink'],
-    ['Samsung', 's7', 'black'],
-    ['Xiaomi', 'redmi note 8', 'red'],
-    ['Pixel', '7', 'red'],
-    ['Iphone', '11', 'white'],
-    // ...
-]);
-factory.listPhones();
-function addPhone(ff, brand, model, color) {
-    console.log('\nAdding a phone to database.');
-    var flyweight = ff.getPhone([brand, model, color]);
-}
-addPhone(factory, 'Samsung', 's7', 'black');
-addPhone(factory, 'Samsung', 'g5', 'red');
-addPhone(factory, 'Samsung', 'g5', 'red');
-factory.listPhones();
+var factory = new TeaFactory();
+var greenTea = factory.create('Green');
+var greenTea1 = factory.create('Green');
+var blackTea = factory.create('Black');
+// console.log(factory.getTypes());
+factory.getTypes();

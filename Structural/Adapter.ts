@@ -18,7 +18,7 @@ class PowerEU implements IEUCharger{
     }
 }
 
-class PowerUSAToPowerEU implements IEUCharger {
+class AdapterUSAtoEU implements IEUCharger {
     public charger : PowerUSA;
 
     constructor(charger: PowerUSA){
@@ -30,5 +30,5 @@ class PowerUSAToPowerEU implements IEUCharger {
 }
 
 let chargingLaptop = new PowerUSA();
-let chargingAdapter = new PowerUSAToPowerEU(chargingLaptop);
+let chargingAdapter = new AdapterUSAtoEU(chargingLaptop);
 chargingAdapter.chargingEU();

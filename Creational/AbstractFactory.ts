@@ -4,12 +4,12 @@ interface FurnitureFactory {
     createSofa(): Sofa;
 }
 
-class VictorianFactory implements FurnitureFactory {
+class LoftFactory implements FurnitureFactory {
     public createChair(): Chair {
-    return new VictorianChair();
+    return new LoftChair();
     }
     public createSofa(): Sofa {
-    return new VictorianSofa();
+    return new LoftSofa();
     }
 }
 
@@ -26,9 +26,9 @@ interface Chair {
     ChairDesign(): string;
 }
 
-class VictorianChair implements Chair {
+class LoftChair implements Chair {
     public ChairDesign(): string {
-        return 'victorian chair';
+        return 'loft chair';
     }
 }
 
@@ -42,9 +42,9 @@ interface Sofa {
     SofaDesign(): string;
 }
 
-class VictorianSofa implements Sofa {
+class LoftSofa implements Sofa {
     public SofaDesign(): string {
-        return 'victorian sofa';
+        return 'loft sofa';
     }
 }
 
@@ -62,5 +62,5 @@ function clientCode(factory: FurnitureFactory) {
     console.log(sofa.SofaDesign());
 }
 
-clientCode(new VictorianFactory());
+clientCode(new ModernFactory());
 }

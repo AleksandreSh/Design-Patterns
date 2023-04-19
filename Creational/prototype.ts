@@ -1,4 +1,4 @@
-namespace PrototypePattern{
+namespace PrototypePattern1{
 interface IPrototype{
     clone(): this;
 }
@@ -21,7 +21,7 @@ class Car implements IPrototype{
 }
 
 function clientCode() {
-    const p1 = new Car('Suv','fx',30000,2018);
+    const p1 = new Car('Sedan','fx',30000,2018);
     const p2 = p1.clone();
     p2.price = 25000;
     p2.year = 2015;

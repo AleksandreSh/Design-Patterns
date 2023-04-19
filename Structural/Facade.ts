@@ -1,32 +1,38 @@
-class Shop {
-    orderItem(amount: number) {
-        const payment = new Payment();
-        const packaging = new Packaging();
-        const delivery = new Delivery();
-
-        payment.pay();
-        packaging.package();
-        delivery.send();
+class Submitter {
+    getDataForm() {
+        console.log('Get data from form elements')
     }
-}
 
-class Payment {
-    pay() {
-        console.log('payment process');
-    }
-}
-
-class Packaging {
-    package() {
-        console.log('packing process');
-    }
-}
-
-class Delivery {
     send() {
-        console.log('sending process');
+        console.log('Send data')
     }
 }
 
-const shop = new Shop();
-shop.orderItem(4);
+class Validator {
+    setRules() {
+        console.log('set validate rules')
+    }
+
+
+    validate() {
+        console.log('Validate all data')
+    }
+}
+
+class SubmitFacade {
+    constructor(private submitter: Submitter, private validator: Validator) {
+    }
+
+    submit() {
+        this.submitter.getDataForm()
+        this.validator.setRules()
+        this.validator.validate()
+        this.submitter.send()
+    }
+}
+
+const validator = new Validator()
+const submitter = new Submitter()
+
+const buttonSubmit = new SubmitFacade(submitter, validator)
+buttonSubmit.submit()

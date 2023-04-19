@@ -1,39 +1,39 @@
-var Shop = /** @class */ (function () {
-    function Shop() {
+var Submitter = /** @class */ (function () {
+    function Submitter() {
     }
-    Shop.prototype.orderItem = function (amount) {
-        var payment = new Payment();
-        var packaging = new Packaging();
-        var delivery = new Delivery();
-        payment.pay();
-        packaging.package();
-        delivery.send();
+    Submitter.prototype.getDataForm = function () {
+        console.log('Get data from form elements');
     };
-    return Shop;
+    Submitter.prototype.send = function () {
+        console.log('Send data');
+    };
+    return Submitter;
 }());
-var Payment = /** @class */ (function () {
-    function Payment() {
+var Validator = /** @class */ (function () {
+    function Validator() {
     }
-    Payment.prototype.pay = function () {
-        console.log('payment process');
+    Validator.prototype.setRules = function () {
+        console.log('set validate rules');
     };
-    return Payment;
+    Validator.prototype.validate = function () {
+        console.log('Validate all data');
+    };
+    return Validator;
 }());
-var Packaging = /** @class */ (function () {
-    function Packaging() {
+var SubmitFacade = /** @class */ (function () {
+    function SubmitFacade(submitter, validator) {
+        this.submitter = submitter;
+        this.validator = validator;
     }
-    Packaging.prototype.package = function () {
-        console.log('packing process');
+    SubmitFacade.prototype.submit = function () {
+        this.submitter.getDataForm();
+        this.validator.setRules();
+        this.validator.validate();
+        this.submitter.send();
     };
-    return Packaging;
+    return SubmitFacade;
 }());
-var Delivery = /** @class */ (function () {
-    function Delivery() {
-    }
-    Delivery.prototype.send = function () {
-        console.log('sending process');
-    };
-    return Delivery;
-}());
-var shop = new Shop();
-shop.orderItem(4);
+var validator = new Validator();
+var submitter = new Submitter();
+var buttonSubmit = new SubmitFacade(submitter, validator);
+buttonSubmit.submit();

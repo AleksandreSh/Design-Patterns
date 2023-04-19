@@ -13,51 +13,58 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Audi = /** @class */ (function () {
-    function Audi() {
+var Button = /** @class */ (function () {
+    function Button() {
+        this.styles = [];
     }
-    Audi.prototype.upgrade = function () {
-        return 'Audi';
-    };
-    return Audi;
+    return Button;
 }());
-var Decorator = /** @class */ (function () {
-    function Decorator(car) {
-        this.car = car;
+var SubmitButton = /** @class */ (function (_super) {
+    __extends(SubmitButton, _super);
+    function SubmitButton(text) {
+        var _this = _super.call(this) || this;
+        _this.text = text;
+        return _this;
     }
-    Decorator.prototype.upgrade = function () {
-        return this.car.upgrade();
+    SubmitButton.prototype.handle = function () {
+        return "You click on button ".concat(this.text, " ");
     };
-    return Decorator;
-}());
-var DecoratorA = /** @class */ (function (_super) {
-    __extends(DecoratorA, _super);
-    function DecoratorA() {
+    return SubmitButton;
+}(Button));
+var StylesButton = /** @class */ (function (_super) {
+    __extends(StylesButton, _super);
+    function StylesButton() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    DecoratorA.prototype.upgrade = function () {
-        return "Tuning car (".concat(_super.prototype.upgrade.call(this), ")");
-    };
-    return DecoratorA;
-}(Decorator));
-var DecoratorB = /** @class */ (function (_super) {
-    __extends(DecoratorB, _super);
-    function DecoratorB() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    return StylesButton;
+}(Button));
+var ColorBackgroundDecorator = /** @class */ (function (_super) {
+    __extends(ColorBackgroundDecorator, _super);
+    function ColorBackgroundDecorator(decoratedButton) {
+        var _this = _super.call(this) || this;
+        _this.decoratedButton = decoratedButton;
+        decoratedButton.styles.push('background: orange;');
+        return _this;
     }
-    DecoratorB.prototype.upgrade = function () {
-        return "Upgrade car (".concat(_super.prototype.upgrade.call(this), ")");
+    ColorBackgroundDecorator.prototype.handle = function () {
+        return this.decoratedButton.handle() + 'with color background';
     };
-    return DecoratorB;
-}(Decorator));
-function clientCode(car) {
-    console.log("RESULT: ".concat(car.upgrade()));
-}
-var audi = new Audi();
-console.log('Client: I\'ve got a car:');
-clientCode(audi);
-console.log('');
-var audiDecorator1 = new DecoratorA(audi);
-var audiDecorator2 = new DecoratorB(audiDecorator1);
-console.log('Client: Now I\'ve got a upgrade car:');
-clientCode(audiDecorator2);
+    return ColorBackgroundDecorator;
+}(StylesButton));
+var BorderDecorator = /** @class */ (function (_super) {
+    __extends(BorderDecorator, _super);
+    function BorderDecorator(decoratedButton) {
+        var _this = _super.call(this) || this;
+        _this.decoratedButton = decoratedButton;
+        decoratedButton.styles.push('border: 1px solid white;');
+        return _this;
+    }
+    BorderDecorator.prototype.handle = function () {
+        return this.decoratedButton.handle() + ', border';
+    };
+    return BorderDecorator;
+}(StylesButton));
+var btn1 = new SubmitButton('Send');
+btn1 = new ColorBackgroundDecorator(btn1);
+btn1 = new BorderDecorator(btn1);
+console.log(btn1.handle());
