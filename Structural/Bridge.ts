@@ -1,3 +1,4 @@
+namespace BridgePattern{
 class Remote {
     protected device: IDevice;
 
@@ -47,4 +48,5 @@ console.log('');
 implementation = new TV();
 abstraction = new AdvancedRemote(implementation);
 clientCode(abstraction);
+}
 

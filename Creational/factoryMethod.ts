@@ -1,3 +1,4 @@
+namespace factoryMetodPattern{
 abstract class TransoprtCreate{
    type: string;
 
@@ -59,3 +60,4 @@ function clientCode(creator: TransoprtCreate) {
 clientCode(new PlaneCreator('Sport', 1000));
 
 clientCode(new CarCreator('Sedan'));
+}

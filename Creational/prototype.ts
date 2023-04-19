@@ -1,3 +1,4 @@
+namespace PrototypePattern{
 interface IPrototype{
     clone(): this;
 }
@@ -29,3 +30,4 @@ function clientCode() {
 }
 
 clientCode();
+}

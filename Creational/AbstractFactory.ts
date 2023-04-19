@@ -1,3 +1,4 @@
+namespace AdstractFactoryPattern{
 interface FurnitureFactory {
     createChair(): Chair;
     createSofa(): Sofa;
@@ -62,3 +63,4 @@ function clientCode(factory: FurnitureFactory) {
 }
 
 clientCode(new VictorianFactory());
+}
