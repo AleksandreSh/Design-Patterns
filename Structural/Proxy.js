@@ -32,6 +32,6 @@ var Verification = /** @class */ (function () {
 }());
 ;
 var page = new Verification(new WebAccess());
-page.signIn('User', 1111);
+page.signIn('User', '1111');
 page.signIn('admin', '1111');
 page.logout();

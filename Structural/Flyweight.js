@@ -1,30 +1,28 @@
-var Tea = /** @class */ (function () {
-    function Tea(type) {
+var Coffee = /** @class */ (function () {
+    function Coffee(type) {
         this.type = type;
     }
-    return Tea;
+    return Coffee;
 }());
-var TeaFactory = /** @class */ (function () {
-    function TeaFactory() {
+var CoffeeFactory = /** @class */ (function () {
+    function CoffeeFactory() {
         this.types = [];
     }
-    TeaFactory.prototype.create = function (name) {
+    CoffeeFactory.prototype.create = function (name) {
         var type = this.types[name];
         if (type) {
             return type;
         }
-        // console.count('type')
-        this.types[name] = new Tea(name);
+        this.types[name] = new Coffee(name);
         return this.types[name];
     };
-    TeaFactory.prototype.getTypes = function () {
+    CoffeeFactory.prototype.getTypes = function () {
         console.log(this.types);
     };
-    return TeaFactory;
+    return CoffeeFactory;
 }());
-var factory = new TeaFactory();
-var greenTea = factory.create('Green');
-var greenTea1 = factory.create('Green');
-var blackTea = factory.create('Black');
-// console.log(factory.getTypes());
+var factory = new CoffeeFactory();
+var millicanoCoffee = factory.create('Millicano');
+var millicanoCoffee1 = factory.create('Millicano');
+var amarettoCoffee = factory.create('Amaretto');
 factory.getTypes();

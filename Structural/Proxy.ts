@@ -37,6 +37,6 @@ class Verification implements IAccess{
 };
 
 const page = new Verification(new WebAccess());
-page.signIn('User',1111);
+page.signIn('User','1111');
 page.signIn('admin','1111');
 page.logout();

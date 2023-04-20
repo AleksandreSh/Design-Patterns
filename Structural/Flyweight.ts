@@ -1,10 +1,10 @@
-class Tea {
+class Coffee {
     type: string;
     constructor (type: string){
         this. type = type;
     }
 }
-class TeaFactory {
+class CoffeeFactory {
     types: string[];
     constructor(){
         this.types = [];
@@ -14,8 +14,8 @@ class TeaFactory {
         if (type) {
             return type;
         }
-        // console.count('type')
-        this.types[name] = new Tea(name);
+        
+        this.types[name] = new Coffee(name);
         return this.types[name];
     }
     getTypes() {
@@ -23,10 +23,9 @@ class TeaFactory {
     }
 }
 
-const factory = new TeaFactory();
+const factory = new CoffeeFactory();
 
-const greenTea = factory.create('Green');
-const greenTea1 = factory.create('Green');
-const blackTea = factory.create('Black');
-// console.log(factory.getTypes());
+const millicanoCoffee = factory.create('Millicano');
+const millicanoCoffee1 = factory.create('Millicano');
+const amarettoCoffee = factory.create('Amaretto');
 factory.getTypes();
