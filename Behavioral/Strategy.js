@@ -1,40 +1,45 @@
-var Context = /** @class */ (function () {
-    function Context(strategy) {
-        this.strategy = strategy;
-    }
-    Context.prototype.setStrategy = function (strategy) {
-        this.strategy = strategy;
-    };
-    Context.prototype.doSomeLogic = function () {
-        console.log('Logic');
-        var result = this.strategy.Cost();
-        console.log(result);
-    };
-    return Context;
-}());
-var Bike = /** @class */ (function () {
-    function Bike() {
-        this.cost = 1;
-    }
-    Bike.prototype.Cost = function () {
-        return "Cost: ".concat(this.cost);
-    };
-    return Bike;
-}());
-var Car = /** @class */ (function () {
-    function Car() {
-        this.cost = 5;
-    }
-    Car.prototype.Cost = function () {
-        return "Cost: ".concat(this.cost);
-    };
-    return Car;
-}());
-var context = new Context(new Car());
-console.log('Client: rent bike.');
-context.setStrategy(new Bike());
-context.doSomeLogic();
-console.log('');
-console.log('Client: rent car.');
-context.setStrategy(new Car());
-context.doSomeLogic();
+var Strategy;
+(function (Strategy) {
+    var Validator = /** @class */ (function () {
+        function Validator(validateType) {
+            this.validateType = validateType;
+        }
+        Validator.prototype.setValidateType = function (validateType) {
+            this.validateType = validateType;
+        };
+        Validator.prototype.doValidation = function (data) {
+            this.validateType.validate(data);
+        };
+        return Validator;
+    }());
+    var RequiredValidation = /** @class */ (function () {
+        function RequiredValidation() {
+        }
+        RequiredValidation.prototype.validate = function (data) {
+            if (data) {
+                console.log('data exist');
+            }
+            else {
+                console.log('data is empty');
+            }
+        };
+        return RequiredValidation;
+    }());
+    var NumberValidation = /** @class */ (function () {
+        function NumberValidation() {
+        }
+        NumberValidation.prototype.validate = function (data) {
+            if (typeof +data === 'number') {
+                console.log('data is number');
+            }
+            else {
+                console.log('data isn`t number');
+            }
+        };
+        return NumberValidation;
+    }());
+    var validator1 = new Validator(new RequiredValidation());
+    validator1.doValidation('some text');
+    var validator2 = new Validator(new NumberValidation());
+    validator2.doValidation('123');
+})(Strategy || (Strategy = {}));

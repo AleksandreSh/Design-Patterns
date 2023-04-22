@@ -1,57 +1,34 @@
-var ArrIterator = /** @class */ (function () {
-    function ArrIterator(elements) {
-        this.index = 0;
+var ButtonsIterator = /** @class */ (function () {
+    function ButtonsIterator(elements, keys, index) {
+        if (keys === void 0) { keys = Object.keys(elements); }
+        if (index === void 0) { index = 0; }
         this.elements = elements;
+        this.keys = keys;
+        this.index = index;
     }
-    ArrIterator.prototype.next = function () {
-        return this.elements[this.index++];
-    };
-    ArrIterator.prototype.hasNext = function () {
-        return this.index < this.elements.length;
-    };
-    return ArrIterator;
-}());
-var ObjIterator = /** @class */ (function () {
-    function ObjIterator(elements) {
-        this.index = 0;
-        this.keys = Object.keys(elements);
-        this.elements = elements;
-    }
-    ObjIterator.prototype.next = function () {
+    ButtonsIterator.prototype.getNext = function () {
         return this.elements[this.keys[this.index++]];
     };
-    ObjIterator.prototype.hasNext = function () {
+    ButtonsIterator.prototype.hasMore = function () {
         return this.index < this.keys.length;
     };
-    return ObjIterator;
+    return ButtonsIterator;
 }());
-var ArrCollection = /** @class */ (function () {
-    function ArrCollection(c) {
-        this.collection = [];
-        this.collection = c;
+var ButtonsCollection = /** @class */ (function () {
+    function ButtonsCollection() {
     }
-    ArrCollection.prototype.createIterator = function () {
-        return new ArrIterator(this.collection);
+    ButtonsCollection.prototype.createCollection = function (collection) {
+        this.collection = collection;
     };
-    return ArrCollection;
+    return ButtonsCollection;
 }());
-var ObjCollection = /** @class */ (function () {
-    function ObjCollection(c) {
-        this.collection = c;
-    }
-    ObjCollection.prototype.createIterator = function () {
-        return new ObjIterator(this.collection);
-    };
-    return ObjCollection;
-}());
-var autos = {
-    audi: { model: 'Audi', color: 'black', price: '20000' },
-    bmw: { model: 'BMW', color: 'white', price: '30000' },
-    tesla: { model: 'Tesla', color: 'gray', price: '40000' }
-};
-var concreteCollection = new ArrCollection([1, 2, 5, 8]);
-var concreteCollection2 = new ObjCollection(autos);
-var iterator = concreteCollection2.createIterator();
-while (iterator.hasNext()) {
-    console.log(iterator.next());
+var buttonCollection1 = new ButtonsCollection();
+buttonCollection1.createCollection([
+    { id: 1, type: 'button', eventName: 'openModal' },
+    { id: 2, type: 'input', eventName: 'submit' },
+    { id: 3, type: 'button', eventName: 'closeModal' },
+]);
+var buttonsIterator1 = new ButtonsIterator(buttonCollection1.collection);
+while (buttonsIterator1.hasMore()) {
+    console.log(buttonsIterator1.getNext());
 }

@@ -13,52 +13,77 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var MessageStatus = /** @class */ (function () {
-    function MessageStatus(name, nextStatus) {
-        this.name = name;
-        this.nextStatus = nextStatus;
-    }
-    MessageStatus.prototype.next = function () {
-        return new this.nextStatus();
-    };
-    return MessageStatus;
-}());
-var Connect = /** @class */ (function (_super) {
-    __extends(Connect, _super);
-    function Connect() {
-        return _super.call(this, 'waitingToConnect', Sending) || this;
-    }
-    return Connect;
-}(MessageStatus));
-;
-var Sending = /** @class */ (function (_super) {
-    __extends(Sending, _super);
-    function Sending() {
-        return _super.call(this, 'sending', Result) || this;
-    }
-    return Sending;
-}(MessageStatus));
-;
-var Result = /** @class */ (function (_super) {
-    __extends(Result, _super);
-    function Result() {
-        return _super.call(this, 'result', Result) || this;
-    }
-    return Result;
-}(MessageStatus));
-;
-var Message = /** @class */ (function () {
-    function Message() {
-        this.state = new Connect();
-    }
-    Message.prototype.nextState = function () {
-        this.state = this.state.next();
-    };
-    return Message;
-}());
-var myOrder = new Message();
-console.log(myOrder.state.name);
-myOrder.nextState();
-console.log(myOrder.state.name);
-myOrder.nextState();
-console.log(myOrder.state.name);
+var State;
+(function (State) {
+    var FormsData = /** @class */ (function () {
+        function FormsData(state) {
+            this.setState(state);
+        }
+        FormsData.prototype.setState = function (state) {
+            this.state = state;
+            this.state.setContextFormData(this);
+        };
+        FormsData.prototype.getState = function () {
+            return this.state;
+        };
+        FormsData.prototype.actionRequest = function () {
+            this.state.action();
+        };
+        return FormsData;
+    }());
+    var FormState = /** @class */ (function () {
+        function FormState() {
+        }
+        FormState.prototype.setContextFormData = function (context) {
+            this.contextFormData = context;
+        };
+        return FormState;
+    }());
+    var GetData = /** @class */ (function (_super) {
+        __extends(GetData, _super);
+        function GetData() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.name = 'getData';
+            return _this;
+        }
+        GetData.prototype.action = function () {
+            console.log('STEP: get form data');
+            this.contextFormData.setState(new ValidationData());
+        };
+        return GetData;
+    }(FormState));
+    var ValidationData = /** @class */ (function (_super) {
+        __extends(ValidationData, _super);
+        function ValidationData() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.name = 'ValidationData';
+            return _this;
+        }
+        ValidationData.prototype.action = function () {
+            console.log('STEP: validation form data');
+            this.contextFormData.setState(new SendingData());
+        };
+        return ValidationData;
+    }(FormState));
+    var SendingData = /** @class */ (function (_super) {
+        __extends(SendingData, _super);
+        function SendingData() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.name = 'SendingData';
+            return _this;
+        }
+        SendingData.prototype.action = function () {
+            console.log('STEP: sending form data');
+            this.contextFormData.setState(new GetData());
+        };
+        return SendingData;
+    }(FormState));
+    var formsData = new FormsData(new GetData());
+    console.log('formsData state', formsData.getState());
+    formsData.actionRequest();
+    console.log('formsData state', formsData.getState());
+    formsData.actionRequest();
+    console.log('formsData state', formsData.getState());
+    formsData.actionRequest();
+    console.log('formsData state', formsData.getState());
+})(State || (State = {}));

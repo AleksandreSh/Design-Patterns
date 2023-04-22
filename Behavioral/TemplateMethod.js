@@ -13,64 +13,67 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var DataMiner = /** @class */ (function () {
-    function DataMiner() {
+var TemplateMethod;
+(function (TemplateMethod) {
+    var DataMiner = /** @class */ (function () {
+        function DataMiner() {
+        }
+        DataMiner.prototype.mine = function () {
+            this.openFile();
+            this.extractDate();
+            this.parseData();
+            this.analizeData();
+            this.sendReport();
+            this.closeFile();
+            this.hook1();
+        };
+        DataMiner.prototype.openFile = function () {
+            console.log('File open');
+        };
+        DataMiner.prototype.analizeData = function () {
+            console.log('Data analysis');
+        };
+        DataMiner.prototype.sendReport = function () {
+            console.log('Send report');
+        };
+        DataMiner.prototype.closeFile = function () {
+            console.log('File close');
+        };
+        DataMiner.prototype.hook1 = function () { };
+        return DataMiner;
+    }());
+    var PDF = /** @class */ (function (_super) {
+        __extends(PDF, _super);
+        function PDF() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        PDF.prototype.extractDate = function () {
+            console.log('extract PDF files');
+        };
+        PDF.prototype.parseData = function () {
+            console.log('parse PDF files');
+        };
+        return PDF;
+    }(DataMiner));
+    var DOC = /** @class */ (function (_super) {
+        __extends(DOC, _super);
+        function DOC() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        DOC.prototype.extractDate = function () {
+            console.log('extract DOC files');
+        };
+        DOC.prototype.parseData = function () {
+            console.log('parse DOC files');
+        };
+        return DOC;
+    }(DataMiner));
+    function clientCode(abstractClass) {
+        abstractClass.mine();
     }
-    DataMiner.prototype.mine = function () {
-        this.openFile();
-        this.extractDate();
-        this.parseData();
-        this.analizeData();
-        this.sendReport();
-        this.closeFile();
-        this.hook1();
-    };
-    DataMiner.prototype.openFile = function () {
-        console.log('File open');
-    };
-    DataMiner.prototype.analizeData = function () {
-        console.log('Data analysis');
-    };
-    DataMiner.prototype.sendReport = function () {
-        console.log('Send report');
-    };
-    DataMiner.prototype.closeFile = function () {
-        console.log('File close');
-    };
-    DataMiner.prototype.hook1 = function () { };
-    return DataMiner;
-}());
-var PDF = /** @class */ (function (_super) {
-    __extends(PDF, _super);
-    function PDF() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    PDF.prototype.extractDate = function () {
-        console.log('extract PDF files');
-    };
-    PDF.prototype.parseData = function () {
-        console.log('parse PDF files');
-    };
-    return PDF;
-}(DataMiner));
-var DOC = /** @class */ (function (_super) {
-    __extends(DOC, _super);
-    function DOC() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    DOC.prototype.extractDate = function () {
-        console.log('extract DOC files');
-    };
-    DOC.prototype.parseData = function () {
-        console.log('parse DOC files');
-    };
-    return DOC;
-}(DataMiner));
-function clientCode(abstractClass) {
-    abstractClass.mine();
-}
-console.log('PDF file read');
-clientCode(new PDF());
-console.log('');
-console.log('DOC file read');
-clientCode(new DOC());
+    console.log('PDF file read');
+    clientCode(new PDF());
+    console.log('');
+    console.log('DOC file read');
+    clientCode(new DOC());
+})(TemplateMethod || (TemplateMethod = {}));

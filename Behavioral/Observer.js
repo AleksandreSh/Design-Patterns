@@ -1,62 +1,57 @@
-var ConcreteCanal = /** @class */ (function () {
-    function ConcreteCanal() {
-        this.subscribers = [];
+var FormsData = /** @class */ (function () {
+    function FormsData(name, email) {
     }
-    ConcreteCanal.prototype.subscribe = function (subscriber) {
-        var isExist = this.subscribers.includes(subscriber);
-        if (isExist) {
-            return console.log('The user is already subscribed');
-        }
-        console.log("".concat(subscriber.name, " subscribed"));
-        this.subscribers.push(subscriber);
-    };
-    ConcreteCanal.prototype.unSubscribe = function (subscriber) {
-        var observerIndex = this.subscribers.indexOf(subscriber);
-        if (observerIndex === -1) {
-            return console.log("".concat(subscriber.name, " not subscribed"));
-        }
-        this.subscribers.splice(observerIndex, 1);
-        console.log("".concat(subscriber.name, " unsubscribed"));
-    };
-    ConcreteCanal.prototype.notify = function () {
-        console.log('Notifying subscribers...');
-        for (var _i = 0, _a = this.subscribers; _i < _a.length; _i++) {
-            var subscriber = _a[_i];
-            subscriber.update(this);
-        }
-    };
-    ConcreteCanal.prototype.newMessage = function () {
-        console.log('You have unread news');
-        this.notify();
-    };
-    return ConcreteCanal;
+    return FormsData;
 }());
-var ConcreteSubscriber1 = /** @class */ (function () {
-    function ConcreteSubscriber1(name) {
-        this.name = name;
+var FormSubmitter = /** @class */ (function () {
+    function FormSubmitter() {
+        this.observers = [];
     }
-    ;
-    ConcreteSubscriber1.prototype.update = function (canal) {
-        console.log("".concat(this.name, " Reacted to the news."));
+    FormSubmitter.prototype.attach = function (observer) {
+        if (this.observers.indexOf(observer) !== -1) {
+            return;
+        }
+        this.observers.push(observer);
     };
-    return ConcreteSubscriber1;
+    FormSubmitter.prototype.detach = function (observer) {
+        var observerIndex = this.observers.indexOf(observer);
+        if (observerIndex == -1) {
+            return;
+        }
+        this.observers.splice(observerIndex, 1);
+    };
+    FormSubmitter.prototype.notify = function () {
+        for (var _i = 0, _a = this.observers; _i < _a.length; _i++) {
+            var observer = _a[_i];
+            observer.update(this);
+        }
+    };
+    return FormSubmitter;
 }());
-var ConcreteSubscriber2 = /** @class */ (function () {
-    function ConcreteSubscriber2(name) {
-        this.name = name;
+var Validator = /** @class */ (function () {
+    function Validator() {
     }
-    ;
-    ConcreteSubscriber2.prototype.update = function (canal) {
-        console.log("".concat(this.name, " Reacted to the news."));
+    Validator.prototype.update = function (subject) {
+        console.log('get updates in Validator');
+        console.log('object: ', subject);
     };
-    return ConcreteSubscriber2;
+    return Validator;
 }());
-var canal = new ConcreteCanal();
-var subscriber1 = new ConcreteSubscriber1('Andrey');
-canal.subscribe(subscriber1);
-canal.unSubscribe(subscriber1);
-canal.unSubscribe(subscriber1);
-var subscriber2 = new ConcreteSubscriber2('Oleg');
-canal.subscribe(subscriber2);
-canal.newMessage();
-canal.unSubscribe(subscriber2);
+var Router = /** @class */ (function () {
+    function Router() {
+    }
+    Router.prototype.update = function (subject) {
+        console.log('get updates in Router');
+        console.log('object: ', subject);
+    };
+    return Router;
+}());
+var subject = new FormSubmitter();
+subject.value = new FormsData('Example name', 'ex@email.fdefr');
+var subscriptor1 = new Validator();
+var subscriptor2 = new Router();
+subject.attach(subscriptor1);
+subject.attach(subscriptor2);
+subject.notify();
+subject.detach(subscriptor1);
+subject.notify();
