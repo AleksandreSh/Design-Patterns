@@ -1,4 +1,4 @@
-
+namespace ChainOfResponsibility {
 interface PaymentMethod {
     setNext(paymentMethod: PaymentMethod): PaymentMethod;
 
@@ -71,3 +71,4 @@ const credit = new CreditMethod();
 clientCode(card);
 console.log('');
 clientCode(cash);
+}

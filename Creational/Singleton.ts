@@ -1,31 +1,45 @@
-let like;
-namespace Singleton{
-class User{
-static like: User;
-[x: string]: any;
-    constructor(){
-        if(typeof User.like === 'object') {
-            return User.like;
+class Store {
+    private static store: Store;
+    private data: object[] = []
+
+    private constructor() {
+    }
+
+    public static getStore(): Store {
+        if (!Store.store) {
+            Store.store = new Store()
         }
-        this.count = 0;
-        User.like = this;
-        return this;
+        return Store.store
     }
 
-    getLikes(){
-        return this.count;
+    setData(data: object): void {
+        this.data.push(data)
     }
-    addLike(){
-        return this.count++;
+
+    getData(): object[] {
+        return this.data
     }
 }
 
-const user1 = new User();
-const user2 = new User();
+const store1 = Store.getStore()
+const store2 = Store.getStore()
 
-user1.addLike();
-user2.addLike();
-
-console.log(user1.getLikes())
-console.log(user2.getLikes())
+if (store1 === store2) {
+    console.log('store1 is equals store2')
 }
+
+store1.setData({
+    user: {
+        name: 'Example',
+        age: 24
+    }
+})
+
+store2.setData({
+    news: {
+        title: 'Example title',
+        date: '31.01.2019'
+    }
+})
+
+console.log('ONE STORE: ', store1.getData())

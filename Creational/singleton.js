@@ -1,24 +1,36 @@
-var like;
-var User = /** @class */ (function () {
-    function User() {
-        if (typeof User.like === 'object') {
-            return User.like;
-        }
-        this.count = 0;
-        User.like = this;
-        return this;
+var Store = /** @class */ (function () {
+    function Store() {
+        this.data = [];
     }
-    User.prototype.getLikes = function () {
-        return this.count;
+    Store.getStore = function () {
+        if (!Store.store) {
+            Store.store = new Store();
+        }
+        return Store.store;
     };
-    User.prototype.addLike = function () {
-        return this.count++;
+    Store.prototype.setData = function (data) {
+        this.data.push(data);
     };
-    return User;
+    Store.prototype.getData = function () {
+        return this.data;
+    };
+    return Store;
 }());
-var user1 = new User();
-var user2 = new User();
-user1.addLike();
-user2.addLike();
-console.log(user1.getLikes());
-console.log(user2.getLikes());
+var store1 = Store.getStore();
+var store2 = Store.getStore();
+if (store1 === store2) {
+    console.log('store1 is equals store2');
+}
+store1.setData({
+    user: {
+        name: 'Example',
+        age: 24
+    }
+});
+store2.setData({
+    news: {
+        title: 'Example title',
+        date: '31.01.2019'
+    }
+});
+console.log('ONE STORE: ', store1.getData());
