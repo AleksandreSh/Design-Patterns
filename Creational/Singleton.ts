@@ -1,5 +1,5 @@
 let like;
-
+namespace Singleton{
 class User{
 static like: User;
 [x: string]: any;
@@ -28,3 +28,4 @@ user2.addLike();
 
 console.log(user1.getLikes())
 console.log(user2.getLikes())
+}
