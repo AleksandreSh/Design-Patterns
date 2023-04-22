@@ -13,61 +13,53 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var DomEl = /** @class */ (function () {
-    function DomEl() {
+var BridgePattern;
+(function (BridgePattern) {
+    var Remote = /** @class */ (function () {
+        function Remote(device) {
+            this.device = device;
+        }
+        Remote.prototype.operation = function () {
+            var result = this.device.operationImplementation();
+            return "Remote operation with:\n".concat(result);
+        };
+        return Remote;
+    }());
+    var AdvancedRemote = /** @class */ (function (_super) {
+        __extends(AdvancedRemote, _super);
+        function AdvancedRemote() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        AdvancedRemote.prototype.operation = function () {
+            var result = this.device.operationImplementation();
+            return "AdvancedRemote operation with:\n".concat(result);
+        };
+        return AdvancedRemote;
+    }(Remote));
+    var Radio = /** @class */ (function () {
+        function Radio() {
+        }
+        Radio.prototype.operationImplementation = function () {
+            return 'Radio Here\'s the result';
+        };
+        return Radio;
+    }());
+    var TV = /** @class */ (function () {
+        function TV() {
+        }
+        TV.prototype.operationImplementation = function () {
+            return 'TV Here\'s the result';
+        };
+        return TV;
+    }());
+    function clientCode(abstraction) {
+        console.log(abstraction.operation());
     }
-    DomEl.prototype.setStyle = function (style) {
-        this.style = style;
-    };
-    DomEl.prototype.getInfo = function () {
-        console.log("Element's type is ".concat(this.type));
-        this.style.getInfo();
-    };
-    return DomEl;
-}());
-var Button = /** @class */ (function (_super) {
-    __extends(Button, _super);
-    function Button() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.type = 'button';
-        return _this;
-    }
-    return Button;
-}(DomEl));
-var Input = /** @class */ (function (_super) {
-    __extends(Input, _super);
-    function Input() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.type = 'input';
-        return _this;
-    }
-    return Input;
-}(DomEl));
-var TransparentStyle = /** @class */ (function () {
-    function TransparentStyle() {
-        this.background = 'transparent';
-        this.border = '1px solid black';
-        this.borderRadius = 8;
-    }
-    TransparentStyle.prototype.getInfo = function () {
-        console.log("This is transparent style with ".concat(this.background, " background, ").concat(this.border, " border, ").concat(this.borderRadius, " border radius"));
-    };
-    return TransparentStyle;
-}());
-var ColorBackgroundStyle = /** @class */ (function () {
-    function ColorBackgroundStyle() {
-        this.background = 'white';
-        this.border = 'none';
-        this.borderRadius = 8;
-    }
-    ColorBackgroundStyle.prototype.getInfo = function () {
-        console.log("This is color background style with ".concat(this.background, " background, ").concat(this.border, " border, ").concat(this.borderRadius, " border radius"));
-    };
-    return ColorBackgroundStyle;
-}());
-var btn1 = new Button();
-btn1.setStyle(new TransparentStyle());
-btn1.getInfo();
-var input1 = new Input();
-input1.setStyle(new ColorBackgroundStyle());
-input1.getInfo();
+    var implementation = new Radio();
+    var abstraction = new Remote(implementation);
+    clientCode(abstraction);
+    console.log('');
+    implementation = new TV();
+    abstraction = new AdvancedRemote(implementation);
+    clientCode(abstraction);
+})(BridgePattern || (BridgePattern = {}));
